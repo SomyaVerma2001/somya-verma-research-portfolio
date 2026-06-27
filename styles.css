@@ -669,9 +669,9 @@ h3 {
 .journey-globe {
   position: absolute;
   top: clamp(210px, 24vw, 310px);
-  right: clamp(-260px, -9vw, -82px);
+  right: clamp(-120px, -3vw, 10px);
   z-index: 1;
-  width: clamp(430px, 39vw, 700px);
+  width: clamp(400px, 35vw, 640px);
   aspect-ratio: 1;
   opacity: 0.82;
   pointer-events: none;
@@ -710,15 +710,6 @@ h3 {
     radial-gradient(circle at 68% 70%, rgba(18, 44, 48, 0.12), transparent 15rem);
 }
 
-.globe-shell svg {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  width: 100%;
-  height: 100%;
-  fill: none;
-}
-
 .globe-canvas {
   position: absolute;
   inset: 3%;
@@ -733,29 +724,68 @@ h3 {
   display: block;
 }
 
+.projected-globe {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(18px 28px 34px rgba(30, 45, 54, 0.12));
+}
+
+.globe-ocean {
+  fill: url("#globeOceanGradient");
+}
+
+.projected-globe .globe-ocean {
+  fill: #f7fbf7;
+  stroke: rgba(184, 137, 58, 0.28);
+  stroke-width: 1.2;
+}
+
+.globe-graticule {
+  fill: none;
+  stroke: rgba(14, 143, 139, 0.18);
+  stroke-width: 0.7;
+}
+
+.globe-country {
+  fill: rgba(210, 190, 143, 0.58);
+  stroke: rgba(59, 86, 88, 0.26);
+  stroke-width: 0.55;
+}
+
+.globe-country.is-highlighted {
+  fill: rgba(184, 137, 58, 0.68);
+  stroke: rgba(122, 85, 32, 0.55);
+  stroke-width: 0.9;
+}
+
+.globe-route {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 8 10;
+}
+
+.route-one {
+  stroke: rgba(184, 137, 58, 0.86);
+}
+
+.route-two {
+  stroke: rgba(14, 143, 139, 0.78);
+}
+
+.globe-marker {
+  fill: #fffdf8;
+  stroke: #b8893a;
+  stroke-width: 3;
+}
+
 .globe-canvas.is-fallback {
   background:
     radial-gradient(circle at 42% 48%, rgba(14, 143, 139, 0.12), transparent 58%),
     linear-gradient(135deg, rgba(210, 190, 143, 0.48) 0 18%, transparent 18% 31%, rgba(184, 137, 58, 0.42) 31% 41%, transparent 41% 58%, rgba(88, 167, 159, 0.42) 58% 68%, transparent 68%),
     linear-gradient(145deg, #f9fbf7, #dff3f1 52%, #f6efe0);
   box-shadow: inset -32px -20px 70px rgba(21, 54, 58, 0.16);
-}
-
-.flight-path {
-  stroke: rgba(184, 137, 58, 0.76);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-dasharray: 8 10;
-}
-
-.path-two {
-  stroke: rgba(14, 143, 139, 0.7);
-}
-
-.flight-node {
-  fill: #fffdf8;
-  stroke: #b8893a;
-  stroke-width: 2;
 }
 
 .city-pin,
@@ -766,6 +796,11 @@ h3 {
   place-items: center;
   border-radius: 999px;
   backdrop-filter: blur(10px);
+  transform: translate(-50%, -50%);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+  white-space: nowrap;
 }
 
 .city-pin {
@@ -780,6 +815,7 @@ h3 {
 }
 
 .country-tag {
+  display: none;
   padding: 5px 8px;
   border: 1px solid rgba(14, 143, 139, 0.18);
   background: rgba(255, 253, 248, 0.58);
@@ -788,36 +824,6 @@ h3 {
   font-weight: 900;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-}
-
-.city-chennai {
-  left: 26%;
-  top: 61%;
-}
-
-.city-newyork {
-  left: 56%;
-  top: 30%;
-}
-
-.city-singapore {
-  left: 35%;
-  top: 70%;
-}
-
-.country-india {
-  left: 28%;
-  top: 55%;
-}
-
-.country-usa {
-  left: 51%;
-  top: 24%;
-}
-
-.country-singapore {
-  left: 43%;
-  top: 76%;
 }
 
 .timeline::before {

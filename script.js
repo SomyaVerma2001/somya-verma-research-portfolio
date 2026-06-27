@@ -98,6 +98,16 @@ function drawCountryGeometry(ctx, geometry, project, fill, stroke, width) {
   if (geometry.type === "MultiPolygon") geometry.coordinates.forEach((polygon) => polygon.forEach(drawRing));
 }
 
+function latLonToVector(lat, lon, radius = 1.62, ThreeModule = window.THREE) {
+  const phi = (90 - lat) * (Math.PI / 180);
+  const theta = (lon + 180) * (Math.PI / 180);
+  return new ThreeModule.Vector3(
+    -radius * Math.sin(phi) * Math.cos(theta),
+    radius * Math.cos(phi),
+    radius * Math.sin(phi) * Math.sin(theta),
+  );
+}
+
 async function buildWorldTexture() {
   const canvas = document.createElement("canvas");
   canvas.width = 1024;
@@ -162,68 +172,86 @@ async function initJourneyGlobe() {
   if (!globeTarget) return;
 
   try {
-    const THREE = await import("https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js");
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-    camera.position.set(0, 0, 4.1);
+    const [{ geoGraticule10, geoInterpolate, geoOrthographic, geoPath }, { feature }, response] = await Promise.all([
+      import("https://cdn.jsdelivr.net/npm/d3-geo@3/+esm"),
+      import("https://cdn.jsdelivr.net/npm/topojson-client@3/+esm"),
+      fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"),
+    ]);
+    const world = await response.json();
+    const countries = feature(world, world.objects.countries).features;
+    const highlighted = new Set(["356", "840", "702"]);
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, preserveDrawingBuffer: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.setClearColor(0x000000, 0);
-    globeTarget.appendChild(renderer.domElement);
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 620 620");
+    svg.setAttribute("role", "img");
+    svg.classList.add("projected-globe");
+    globeTarget.replaceChildren(svg);
 
-    const texture = new THREE.CanvasTexture(await buildWorldTexture());
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.anisotropy = 8;
+    const projection = geoOrthographic()
+      .translate([310, 310])
+      .scale(270)
+      .rotate([-45, -6])
+      .clipAngle(124);
+    const path = geoPath(projection);
 
-    const globe = new THREE.Mesh(
-      new THREE.SphereGeometry(1.52, 96, 96),
-      new THREE.MeshPhysicalMaterial({
-        map: texture,
-        roughness: 0.78,
-        metalness: 0.02,
-        clearcoat: 0.22,
-        clearcoatRoughness: 0.45,
-      }),
-    );
-    globe.rotation.set(-0.12, 1.16, 0.05);
-    scene.add(globe);
-
-    const atmosphere = new THREE.Mesh(
-      new THREE.SphereGeometry(1.57, 96, 96),
-      new THREE.MeshBasicMaterial({
-        color: 0x8fd4cf,
-        transparent: true,
-        opacity: 0.08,
-        side: THREE.BackSide,
-      }),
-    );
-    scene.add(atmosphere);
-
-    scene.add(new THREE.HemisphereLight(0xffffff, 0xd6c08e, 2.8));
-    const key = new THREE.DirectionalLight(0xffffff, 2.4);
-    key.position.set(-2.5, 2.2, 3.8);
-    scene.add(key);
-    const rim = new THREE.DirectionalLight(0x8bd5d0, 1.2);
-    rim.position.set(2.8, -1.4, 2.2);
-    scene.add(rim);
-
-    const resize = () => {
-      const size = Math.max(240, globeTarget.clientWidth);
-      renderer.setSize(size, size, false);
-      camera.aspect = 1;
-      camera.updateProjectionMatrix();
+    const addPath = (className, datum) => {
+      const element = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      element.setAttribute("class", className);
+      element.setAttribute("d", path(datum));
+      svg.appendChild(element);
+      return element;
     };
-    resize();
-    window.addEventListener("resize", resize);
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const animate = () => {
-      if (!reduceMotion) globe.rotation.y += 0.0018;
-      renderer.render(scene, camera);
-      window.requestAnimationFrame(animate);
+    const sphere = { type: "Sphere" };
+    addPath("globe-ocean", sphere);
+    addPath("globe-graticule", geoGraticule10());
+    countries.forEach((country) => {
+      addPath(highlighted.has(String(country.id).padStart(3, "0")) ? "globe-country is-highlighted" : "globe-country", country);
+    });
+
+    const cityData = {
+      chennai: { label: "Chennai", coordinates: [80.2707, 13.0827], selector: ".city-chennai" },
+      newyork: { label: "New York", coordinates: [-74.006, 40.7128], selector: ".city-newyork" },
+      singaporeCity: { label: "Singapore", coordinates: [103.8198, 1.3521], selector: ".city-singapore" },
+      india: { label: "India", coordinates: [78.6569, 22.9734], selector: ".country-india" },
+      usa: { label: "United States", coordinates: [-98.5795, 39.8283], selector: ".country-usa" },
+      singapore: { label: "Singapore", coordinates: [103.8198, 1.3521], selector: ".country-singapore" },
     };
-    animate();
+
+    const greatCircle = (from, to) => {
+      const interpolate = geoInterpolate(from, to);
+      return {
+        type: "LineString",
+        coordinates: Array.from({ length: 80 }, (_, index) => interpolate(index / 79)),
+      };
+    };
+    addPath("globe-route route-one", greatCircle(cityData.chennai.coordinates, cityData.newyork.coordinates));
+    addPath("globe-route route-two", greatCircle(cityData.newyork.coordinates, cityData.singaporeCity.coordinates));
+
+    [cityData.chennai, cityData.newyork, cityData.singaporeCity].forEach((city) => {
+      const [cx, cy] = projection(city.coordinates);
+      const marker = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      marker.setAttribute("class", "globe-marker");
+      marker.setAttribute("cx", cx);
+      marker.setAttribute("cy", cy);
+      marker.setAttribute("r", "5.5");
+      svg.appendChild(marker);
+    });
+
+    const projectLabels = () => {
+      const rect = globeTarget.getBoundingClientRect();
+      Object.values(cityData).forEach((item) => {
+        const label = document.querySelector(item.selector);
+        const point = projection(item.coordinates);
+        if (!label || !point) return;
+        label.style.left = `${(point[0] / 620) * rect.width}px`;
+        label.style.top = `${(point[1] / 620) * rect.height}px`;
+        label.style.opacity = "1";
+        label.style.transform = "translate(-50%, -50%)";
+      });
+    };
+    projectLabels();
+    window.addEventListener("resize", projectLabels);
   } catch {
     globeTarget.classList.add("is-fallback");
   }
