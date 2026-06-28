@@ -194,11 +194,13 @@ async function initJourneyGlobe() {
       .clipAngle(124);
     const path = geoPath(projection);
 
+    const pathItems = [];
     const addPath = (className, datum) => {
       const element = document.createElementNS("http://www.w3.org/2000/svg", "path");
       element.setAttribute("class", className);
       element.setAttribute("d", path(datum));
       svg.appendChild(element);
+      pathItems.push({ element, datum });
       return element;
     };
 
@@ -228,7 +230,7 @@ async function initJourneyGlobe() {
     addPath("globe-route route-one", greatCircle(cityData.chennai.coordinates, cityData.newyork.coordinates));
     addPath("globe-route route-two", greatCircle(cityData.newyork.coordinates, cityData.singaporeCity.coordinates));
 
-    [cityData.chennai, cityData.newyork, cityData.singaporeCity].forEach((city) => {
+    const markers = [cityData.chennai, cityData.newyork, cityData.singaporeCity].map((city) => {
       const [cx, cy] = projection(city.coordinates);
       const marker = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       marker.setAttribute("class", "globe-marker");
@@ -236,22 +238,61 @@ async function initJourneyGlobe() {
       marker.setAttribute("cy", cy);
       marker.setAttribute("r", "5.5");
       svg.appendChild(marker);
+      return { marker, city };
     });
+
+    const renderGlobe = () => {
+      pathItems.forEach(({ element, datum }) => {
+        element.setAttribute("d", path(datum));
+      });
+      markers.forEach(({ marker, city }) => {
+        const point = projection(city.coordinates);
+        if (!point) {
+          marker.style.opacity = "0";
+          return;
+        }
+        marker.style.opacity = "1";
+        marker.setAttribute("cx", point[0]);
+        marker.setAttribute("cy", point[1]);
+      });
+    };
 
     const projectLabels = () => {
       const rect = globeTarget.getBoundingClientRect();
       Object.values(cityData).forEach((item) => {
         const label = document.querySelector(item.selector);
         const point = projection(item.coordinates);
-        if (!label || !point) return;
+        if (!label) return;
+        if (!point) {
+          label.style.opacity = "0";
+          return;
+        }
         label.style.left = `${(point[0] / 620) * rect.width}px`;
         label.style.top = `${(point[1] / 620) * rect.height}px`;
         label.style.opacity = "1";
         label.style.transform = "translate(-50%, -50%)";
       });
     };
+    renderGlobe();
     projectLabels();
-    window.addEventListener("resize", projectLabels);
+
+    const renderAll = () => {
+      renderGlobe();
+      projectLabels();
+    };
+    window.addEventListener("resize", renderAll);
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduceMotion) {
+      const baseRotation = [-45, -6];
+      const animate = () => {
+        const drift = Math.sin(Date.now() * 0.00018) * 9;
+        projection.rotate([baseRotation[0] + drift, baseRotation[1]]);
+        renderAll();
+        window.requestAnimationFrame(animate);
+      };
+      animate();
+    }
   } catch {
     globeTarget.classList.add("is-fallback");
   }
