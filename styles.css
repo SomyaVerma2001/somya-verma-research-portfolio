@@ -57,6 +57,21 @@ button {
   cursor: pointer;
 }
 
+sub,
+sup {
+  position: relative;
+  font-size: 0.56em;
+  line-height: 0;
+}
+
+sub {
+  bottom: -0.08em;
+}
+
+sup {
+  top: -0.36em;
+}
+
 :focus-visible {
   outline: 2px solid var(--brand-light);
   outline-offset: 2px;
@@ -289,24 +304,27 @@ button {
 }
 
 .hero-profile {
-  width: min(28rem, 100%);
+  width: min(31rem, 100%);
   display: flex;
-  gap: 0.75rem;
-  align-items: stretch;
+  gap: 1rem;
+  align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-card);
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.75rem;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08)),
+    rgba(255, 255, 255, 0.08);
+  padding: 0.875rem;
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.24);
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(20px);
 }
 
 .hero-profile figure {
-  width: 5rem;
-  aspect-ratio: 3 / 4;
+  flex: 0 0 6rem;
+  aspect-ratio: 1;
   margin: 0;
   overflow: hidden;
-  border-radius: 0.75rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.26);
 }
 
 .hero-profile img {
@@ -327,10 +345,15 @@ button {
   text-transform: uppercase;
 }
 
+.hero-profile span {
+  color: var(--brand-light);
+}
+
 .hero-profile strong {
   display: block;
   margin-top: 0.35rem;
-  font-size: 1.35rem;
+  color: white;
+  font-size: 1.55rem;
   font-weight: 500;
 }
 
@@ -370,6 +393,10 @@ button {
 
 .trust-section {
   min-height: 42rem;
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr);
+  align-items: start;
+  gap: 2rem 2.5rem;
   padding: 5rem 1.5rem;
 }
 
@@ -396,23 +423,27 @@ button {
 }
 
 .intro-card {
-  position: absolute;
-  top: 5rem;
-  right: 2.5rem;
-  max-width: 32rem;
+  position: relative;
+  z-index: 3;
+  max-width: 48rem;
   display: flex;
   gap: 1.25rem;
   border-radius: var(--radius-card);
-  background: var(--surface);
-  padding: 1.5rem;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(250, 247, 240, 0.84)),
+    var(--surface);
+  padding: 1.5rem 1.75rem;
+  box-shadow: 0 1.4rem 3.5rem rgba(10, 10, 10, 0.06);
 }
 
 .intro-card > span {
   align-self: start;
-  border-radius: 0.75rem;
+  border: 1px solid rgba(184, 137, 58, 0.28);
+  border-radius: 999px;
   background: white;
   padding: 0.75rem 1rem;
-  font-size: 1.25rem;
+  color: var(--gold);
+  font-size: 1rem;
   font-weight: 500;
 }
 
@@ -430,6 +461,7 @@ button {
 }
 
 .ghost-heading {
+  grid-column: 1 / -1;
   margin: 3rem auto 0;
   max-width: 88rem;
   display: grid;
@@ -456,6 +488,7 @@ button {
 .lab-strip {
   position: relative;
   z-index: 2;
+  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
@@ -829,11 +862,13 @@ button {
 .timeline article:not(:last-child)::after {
   content: "";
   position: absolute;
-  top: calc(50% + 1.95rem);
-  left: 50%;
-  width: 1px;
-  height: calc(100% - 3.9rem);
-  background: linear-gradient(180deg, rgba(14, 143, 139, 0.48), rgba(184, 137, 58, 0.5));
+  top: calc(50% + 1.9375rem);
+  bottom: calc(-50% + 1.9375rem);
+  left: calc(50% - 1px);
+  width: 2px;
+  height: auto;
+  background: linear-gradient(180deg, rgba(14, 143, 139, 0.64), rgba(184, 137, 58, 0.66));
+  box-shadow: 0 0 1.5rem rgba(14, 143, 139, 0.14);
 }
 
 .timeline article:nth-child(odd) .timeline-card {
@@ -847,10 +882,29 @@ button {
 }
 
 .timeline-marker {
+  position: relative;
   grid-column: 2;
   display: grid;
   place-items: center;
   z-index: 3;
+}
+
+.timeline-marker::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: clamp(3rem, 5vw, 4.8rem);
+  height: 2px;
+  background: linear-gradient(90deg, rgba(184, 137, 58, 0.12), rgba(41, 67, 75, 0.38));
+}
+
+.timeline article:nth-child(odd) .timeline-marker::before {
+  right: calc(50% + 1.9375rem);
+}
+
+.timeline article:nth-child(even) .timeline-marker::before {
+  left: calc(50% + 1.9375rem);
+  background: linear-gradient(90deg, rgba(41, 67, 75, 0.38), rgba(184, 137, 58, 0.12));
 }
 
 .timeline-marker span {
@@ -864,6 +918,7 @@ button {
   color: #29434b;
   font-size: 0.68rem;
   font-weight: 500;
+  box-shadow: 0 1rem 2.5rem rgba(184, 137, 58, 0.12);
 }
 
 .timeline-card {
@@ -1107,10 +1162,12 @@ button {
     grid-template-columns: 1fr;
   }
 
+  .trust-section {
+    grid-template-columns: 1fr;
+  }
+
   .intro-card {
-    position: relative;
-    inset: auto;
-    margin-top: 2rem;
+    margin-top: 0;
   }
 
   .ghost-heading,
@@ -1155,7 +1212,11 @@ button {
   }
 
   .timeline article:not(:last-child)::after {
-    left: 1.7rem;
+    left: 1.675rem;
+  }
+
+  .timeline-marker::before {
+    display: none;
   }
 }
 
@@ -1173,6 +1234,18 @@ button {
   .footer-bottom {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .hero-profile {
+    align-items: flex-start;
+  }
+
+  .hero-profile figure {
+    flex-basis: 4.5rem;
+  }
+
+  .intro-card {
+    flex-direction: column;
   }
 
   .project-row {
