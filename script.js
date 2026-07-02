@@ -12,13 +12,24 @@ let lenis = {
   stop() {},
 };
 
-import("https://cdn.jsdelivr.net/npm/lenis@1.1.18/+esm")
-  .then(({ default: Lenis }) => {
-    lenis = new Lenis({ smoothWheel: true });
-    if (document.body.classList.contains("is-locked")) lenis.stop();
-    else lenis.start();
-  })
-  .catch(() => {});
+const shouldUseSmoothScroll =
+  window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+  !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (shouldUseSmoothScroll) {
+  import("https://cdn.jsdelivr.net/npm/lenis@1.1.18/+esm")
+    .then(({ default: Lenis }) => {
+      lenis = new Lenis({
+        duration: 1.05,
+        smoothWheel: true,
+        wheelMultiplier: 0.85,
+        touchMultiplier: 1,
+      });
+      if (document.body.classList.contains("is-locked")) lenis.stop();
+      else lenis.start();
+    })
+    .catch(() => {});
+}
 
 function raf(time) {
   lenis.raf(time);
@@ -27,18 +38,6 @@ function raf(time) {
 window.requestAnimationFrame(raf);
 lenis.stop();
 document.body.classList.add("is-locked");
-
-function updateRootScale() {
-  const FONT_BASE = 16;
-  const BASE_W = 1920;
-  const COEF = 0.6666;
-  const reduction = ((BASE_W - window.innerWidth) / BASE_W) * 100 * COEF;
-  const size = FONT_BASE - (FONT_BASE * reduction) / 100;
-  if (size > FONT_BASE) html.style.fontSize = `${size}px`;
-  else html.style.removeProperty("font-size");
-}
-window.addEventListener("resize", updateRootScale);
-updateRootScale();
 
 function splitWords(element) {
   const text = element.dataset.text || element.textContent.trim();
@@ -384,7 +383,8 @@ async function initJourneyGlobe() {
     window.addEventListener("resize", renderAll);
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!reduceMotion) {
+    const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    if (!reduceMotion && !isTouchDevice) {
       const baseRotation = [-45, -6];
       const animate = () => {
         const drift = Math.sin(Date.now() * 0.00018) * 9;
