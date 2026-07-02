@@ -6,89 +6,101 @@
     <title>Somya Verma | AI Catalysis & Materials Research</title>
     <meta
       name="description"
-      content="Research portfolio for Somya Verma: direct Joule synthesized iron catalysts, AI-driven catalyst optimization, and data-driven high-entropy alloy modeling."
+      content="Research portfolio for Somya Verma: CO2 conversion to liquid fuels, Bayesian catalyst optimization, and high-entropy alloy materials informatics."
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="preload" as="image" href="assets/luxury-fuels-lab.png" />
-    <link rel="preload" as="image" href="assets/luxury-ai-catalyst.png" />
-    <link rel="preload" as="image" href="assets/co2-to-fuels.png" />
+    <link rel="preload" as="image" href="assets/profile-photo.png" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="ambient-stage" aria-hidden="true">
-      <div class="ambient-mesh mesh-one"></div>
-      <div class="ambient-mesh mesh-two"></div>
-      <div class="formula-cloud formula-one">CO<sub>2</sub> -> C<sub>5</sub><sup>+</sup></div>
-      <div class="formula-cloud formula-two">Fe<sub>3</sub>O<sub>4</sub> / Fe<sub>5</sub>C<sub>2</sub></div>
+    <div class="loader" aria-label="Loading portfolio">
+      <div class="loader-brand">
+        <span class="orb">SV</span>
+        <span>Somya Verma</span>
+      </div>
+      <div class="loader-track"><span></span></div>
     </div>
 
-    <header class="site-header">
-      <a class="brand" href="#top" aria-label="Somya Verma home">
-        <span class="brand-mark">SV</span>
-        <span>
-          <strong>Somya Verma</strong>
-          <small>PhD Research | AI x Catalysis</small>
-        </span>
-      </a>
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#labs">Labs</a>
-        <a href="#projects">Projects</a>
-        <a href="#positions">Positions</a>
-        <a href="#publication">Publication</a>
-        <a href="#teams">Teams</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
-
-    <main id="top">
-      <section class="hero scene" data-scene="0">
-        <div class="hero-copy">
-          <p class="eyebrow">AI-guided catalysis | CO<sub>2</sub> to liquid fuels | Materials informatics</p>
-          <h1>Designing catalysts and materials with data, chemistry, and speed.</h1>
-          <p class="lede">
-            I focus on catalytic conversion of CO<sub>2</sub> to gasoline and jet fuels, Bayesian optimization workflows for
-            Fischer-Tropsch catalyst discovery, and data-driven modeling of high-entropy alloy properties.
-          </p>
-          <div class="hero-actions">
-            <a class="button primary" href="#projects">View Projects</a>
-            <a class="button secondary" href="https://www.linkedin.com/in/somyaverma27/">LinkedIn</a>
-          </div>
+    <main id="top" class="page-shell">
+      <section class="hero-card section-card dark-card">
+        <div class="hero-bg" aria-hidden="true">
+          <img src="assets/luxury-fuels-lab.png" alt="" fetchpriority="high" />
         </div>
-        <aside class="identity-card" aria-label="Research identity">
-          <figure class="portrait-card">
-            <img src="assets/profile-photo.png" alt="Somya Verma portrait" />
-          </figure>
-          <div class="identity-copy">
-            <span class="avatar">SV</span>
-            <h2>Somya Verma</h2>
-            <p>PhD at NTU Singapore | MS in Materials Science, SUNY Buffalo | B.Tech in Chemical Engineering, IIT Madras</p>
+
+        <header class="hero-header">
+          <nav class="hero-nav" aria-label="Primary left navigation">
+            <a href="#projects">Projects</a>
+            <a href="#positions">Trajectory</a>
+          </nav>
+          <a class="site-brand" href="#top" aria-label="Somya Verma home">
+            <span class="brand-symbol">SV</span>
+            <span>Somya Verma</span>
+          </a>
+          <div class="header-actions">
+            <a class="visit-link" href="mailto:SOMYA001@e.ntu.edu.sg">Contact</a>
+            <button class="menu-button" type="button" aria-label="Open menu" data-open-menu>
+              <span></span>
+              <span></span>
+            </button>
           </div>
-          <div class="mini-atlas" aria-hidden="true">
-            <span>CO<sub>2</sub></span>
-            <i></i>
-            <span>AI</span>
-            <i></i>
-            <span>C<sub>5</sub><sup>+</sup></span>
-          </div>
-        </aside>
+        </header>
+
+        <div class="hero-title-wrap">
+          <p class="eyebrow light"><span></span> AI-guided catalysis | CO<sub>2</sub> to liquid fuels</p>
+          <h1 class="hero-title split-words" data-text="Catalysts Data Fuels">Catalysts Data Fuels</h1>
+        </div>
+
+        <div class="hero-bottom">
+          <p class="tagline split-lines" data-lines="Convert CO₂|Optimize faster">Convert CO<sub>2</sub><br />Optimize faster</p>
+          <aside class="hero-profile reveal">
+            <figure>
+              <img src="assets/profile-photo.png" alt="Somya Verma portrait" />
+            </figure>
+            <div>
+              <span>Research Portfolio</span>
+              <strong>Somya Verma</strong>
+              <p>PhD at NTU Singapore | MS Materials Science, SUNY Buffalo | B.Tech Chemical Engineering, IIT Madras</p>
+            </div>
+          </aside>
+        </div>
       </section>
 
-      <section class="labs scene" id="labs" data-scene="0">
-        <div class="section-heading">
-          <p class="eyebrow">Current Labs</p>
-          <h2>Working across three research environments.</h2>
+      <section class="trust-section section-card light-card" id="labs">
+        <div class="badge-circle reveal">
+          <strong>3</strong>
+          <span>Current research labs</span>
         </div>
-        <div class="lab-grid">
-          <article>
+        <article class="intro-card reveal">
+          <span>#01</span>
+          <div>
+            <h2>Research across AI, catalysis, and materials.</h2>
+            <p>
+              I focus on catalytic conversion of CO<sub>2</sub> to gasoline and jet fuels, Bayesian optimization workflows
+              for Fischer-Tropsch catalyst discovery, and data-driven modeling of high-entropy alloy properties.
+            </p>
+          </div>
+        </article>
+        <h2 class="ghost-heading" aria-hidden="true">
+          <span>AI</span>
+          <span>Catalysis</span>
+          <span>Materials</span>
+          <span>Fuels</span>
+        </h2>
+        <div class="lab-strip">
+          <article class="reveal">
             <span>Berkeley</span>
             <h3>AI for Exploration of Catalyst Inorganic Surfaces (AxCIS) Lab</h3>
             <p>UC Berkeley, BEARS</p>
           </article>
-          <article>
+          <article class="reveal">
             <span>A*STAR</span>
             <h3>Accelerated Catalyst Development Platform</h3>
             <p>ISCE2, A*STAR</p>
           </article>
-          <article>
+          <article class="reveal">
             <span>NTU</span>
             <h3>HIP Lab</h3>
             <p>Nanyang Technological University</p>
@@ -96,116 +108,100 @@
         </div>
       </section>
 
-      <section class="projects" id="projects">
-        <div class="section-heading scene" data-scene="1">
-          <p class="eyebrow">Selected Projects</p>
-          <h2>Main research projects.</h2>
-          <p>
-            Three threads connect the portfolio: fast catalyst synthesis, probabilistic optimization, and electronic
-            structure-informed alloy design.
-          </p>
+      <section class="programs-section section-card surface-card" id="projects">
+        <div class="section-kicker">
+          <p class="eyebrow"><span></span> Selected Projects</p>
+          <h2 class="split-lines" data-lines="Main research|directions">Main research<br />directions</h2>
         </div>
-
-        <article class="project scene" data-scene="0">
-          <div class="project-number">01</div>
-          <div class="project-copy">
-            <p class="eyebrow">CO<sub>2</sub> Hydrogenation | Direct Joule Synthesis</p>
-            <h3>Direct Joule Synthesized Iron-Based Catalysts for CO<sub>2</sub> Hydrogenation to Gasoline- and Jet-Fuel-Range Hydrocarbons</h3>
-            <p>
-              A rapid, solvent-free synthesis route combining direct Joule synthesis with high-energy ball milling to
-              prepare Fe-based catalysts for CO<sub>2</sub> hydrogenation. The FeCoNa-B25-4-Ar catalyst reaches 57.3% CO<sub>2</sub>
-              conversion, 42.1% C<sub>5</sub><sup>+</sup> selectivity, and 24.1% C<sub>5</sub><sup>+</sup> yield at 350 C and 30 bar.
-            </p>
-            <p>
-              The work shows that initially metallic FeCo alloy precatalysts reconstruct under reaction conditions into
-              mixed oxide-carbide interfaces, where Fe<sub>3</sub>O<sub>4</sub> supports CO<sub>2</sub> activation and chi-Fe<sub>5</sub>C<sub>2</sub> drives C-C coupling.
-            </p>
-            <ul class="tag-list">
-              <li>Direct Joule synthesis</li>
-              <li>FeCoNa catalysts</li>
-              <li>Gasoline and jet fuels</li>
-              <li>C<sub>5</sub><sup>+</sup> hydrocarbons</li>
-            </ul>
-          </div>
-          <figure class="project-media">
-            <img src="assets/luxury-fuels-lab.png" alt="Luxury research lab with fuel samples and reactor" />
-            <figcaption>
-              <strong>57.3%</strong>
-              <span>CO<sub>2</sub> conversion</span>
-            </figcaption>
-          </figure>
-        </article>
-
-        <article class="project scene" data-scene="1">
-          <div class="project-number">02</div>
-          <div class="project-copy">
-            <p class="eyebrow">Bayesian Optimization | Multi-Task Gaussian Processes</p>
-            <h3>AI-Driven Catalyst Optimization Using Multi-Task Gaussian Processes and Bayesian Optimisation</h3>
-            <p>
-              A probabilistic optimization workflow for Fe-Co-Na-Zn Fischer-Tropsch catalyst discovery, combining
-              weighted multi-task Gaussian Processes with argon-only yield checks to optimize C<sub>5</sub><sup>+</sup> yield.
-            </p>
-            <p>
-              The BO workflow uses 153 training rows, 42 unique training compositions, and 6020 candidate rows to select
-              exploit and explore candidates while balancing yield, uncertainty, and experimentally practical reactor
-              conditions across pressure, temperature, and GHSV.
-            </p>
-            <ul class="tag-list">
-              <li>Multi-task GP</li>
-              <li>Bayesian optimisation</li>
-              <li>C<sub>5</sub><sup>+</sup> yield</li>
-              <li>High-throughput catalysis</li>
-            </ul>
-          </div>
-          <figure class="project-media">
-            <img src="assets/luxury-ai-catalyst.png" alt="Bright AI catalyst optimization laboratory" />
-            <figcaption>
-              <strong>6020</strong>
-              <span>candidate rows</span>
-            </figcaption>
-          </figure>
-        </article>
-
-        <article class="project scene" data-scene="2">
-          <div class="project-number">03</div>
-          <div class="project-copy">
-            <p class="eyebrow">Materials Informatics | High-Entropy Alloys</p>
-            <h3>Enhanced Modeling of Electronic Structure-Mechanical Property Relationships in High-Entropy Alloys Through Data Driven Analysis</h3>
-            <p>
-              A data-driven framework integrating density-of-states-derived electronic features with machine learning to
-              predict yield strength and plasticity in high-entropy alloys more accurately than composition-only models.
-            </p>
-            <p>
-              PCA decomposes DOS features into energy-dependent contributions, revealing low-energy DOS links to yield
-              strength and high-energy states that support plasticity, with Mo and V emerging as key chemistry signals.
-            </p>
-            <ul class="tag-list">
-              <li>High-entropy alloys</li>
-              <li>Density of states</li>
-              <li>PCA</li>
-              <li>Materials informatics</li>
-            </ul>
-          </div>
-          <figure class="project-media material-card" aria-label="Electronic structure visual">
-            <div class="dos-lines">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
+        <div class="project-list">
+          <article class="project-row reveal">
+            <span class="project-index">01</span>
+            <div>
+              <p>CO<sub>2</sub> Hydrogenation | Direct Joule Synthesis</p>
+              <h3>Direct Joule Synthesized Iron-Based Catalysts for CO<sub>2</sub> Hydrogenation to Gasoline- and Jet-Fuel-Range Hydrocarbons</h3>
             </div>
-            <figcaption>
-              <strong>DOS</strong>
-              <span>electronic features</span>
-            </figcaption>
-          </figure>
-        </article>
+            <a href="#fuels-project" aria-label="Read fuel project">View</a>
+          </article>
+          <article class="project-row reveal">
+            <span class="project-index">02</span>
+            <div>
+              <p>Bayesian Optimization | Multi-Task Gaussian Processes</p>
+              <h3>AI-Driven Catalyst Optimization Using Multi-Task Gaussian Processes and Bayesian Optimisation</h3>
+            </div>
+            <a href="#bo-project" aria-label="Read Bayesian optimization project">View</a>
+          </article>
+          <article class="project-row reveal">
+            <span class="project-index">03</span>
+            <div>
+              <p>Materials Informatics | High-Entropy Alloys</p>
+              <h3>Enhanced Modeling of Electronic Structure-Mechanical Property Relationships in High-Entropy Alloys</h3>
+            </div>
+            <a href="#hea-project" aria-label="Read alloy project">View</a>
+          </article>
+        </div>
       </section>
 
-      <section class="positions scene" id="positions" data-scene="1">
+      <section class="facilities-section section-card light-card" aria-label="Research project details">
+        <div class="facilities-copy">
+          <p class="eyebrow"><span></span> Project details</p>
+          <h2 class="split-lines" data-lines="From synthesis|to prediction">From synthesis<br />to prediction</h2>
+          <p>
+            The portfolio connects fast experimental routes, probabilistic experiment selection, and interpretable
+            materials modeling into one research story.
+          </p>
+        </div>
+        <div class="feature-cards">
+          <article class="feature-card reveal" id="fuels-project">
+            <img src="assets/luxury-fuels-lab.png" alt="Research lab with fuel samples and reactor" loading="lazy" />
+            <div>
+              <span>57.3% CO<sub>2</sub> conversion</span>
+              <h3>CO<sub>2</sub> to gasoline and jet-fuel-range hydrocarbons</h3>
+              <p>
+                Direct Joule synthesis with high-energy ball milling prepares Fe-based catalysts that reconstruct into
+                oxide-carbide interfaces for CO<sub>2</sub> activation and C-C coupling.
+              </p>
+            </div>
+          </article>
+          <article class="feature-card reveal" id="bo-project">
+            <img src="assets/luxury-ai-catalyst.png" alt="Bright AI catalyst optimization laboratory" loading="lazy" />
+            <div>
+              <span>6020 candidate rows</span>
+              <h3>Bayesian optimization for Fischer-Tropsch catalyst discovery</h3>
+              <p>
+                Weighted multi-task Gaussian Processes balance yield, uncertainty, and practical reactor constraints
+                across Fe-Co-Na-Zn catalyst compositions.
+              </p>
+            </div>
+          </article>
+          <article class="feature-card reveal" id="hea-project">
+            <div class="dos-mini" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+            <div>
+              <span>DOS-informed modeling</span>
+              <h3>Electronic structure and mechanical properties in high-entropy alloys</h3>
+              <p>
+                Density-of-states features and PCA reveal energy-dependent links to yield strength and plasticity,
+                improving prediction beyond composition-only descriptors.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="stats-section section-card dark-card">
+        <p class="eyebrow light"><span></span> By the numbers</p>
+        <h2 class="split-lines" data-lines="Research that|keeps score">Research that<br />keeps score</h2>
+        <dl class="stats-grid">
+          <div class="reveal"><dt>CO2 conversion</dt><dd><strong>57.3%</strong><span>CO<sub>2</sub> conversion</span></dd></div>
+          <div class="reveal"><dt>C5+ selectivity</dt><dd><strong>42.1%</strong><span>C<sub>5</sub><sup>+</sup> selectivity</span></dd></div>
+          <div class="reveal"><dt>Candidate rows</dt><dd><strong>6020</strong><span>BO candidate rows</span></dd></div>
+          <div class="reveal"><dt>Core projects</dt><dd><strong>03</strong><span>Main research threads</span></dd></div>
+        </dl>
+      </section>
+
+      <section class="positions section-card light-card" id="positions">
         <div class="section-heading">
-          <p class="eyebrow">Positions</p>
-          <h2>Academic and research timeline.</h2>
+          <p class="eyebrow"><span></span> Positions</p>
+          <h2 class="split-lines" data-lines="Academic and|research timeline">Academic and<br />research timeline</h2>
         </div>
         <div class="journey-globe" aria-hidden="true">
           <div class="globe-shell">
@@ -219,7 +215,7 @@
           </div>
         </div>
         <div class="timeline">
-          <article>
+          <article class="reveal">
             <div class="timeline-marker"><span>IITM</span></div>
             <div class="timeline-card">
               <span>Foundation</span>
@@ -227,7 +223,7 @@
               <p>Indian Institute of Technology Madras</p>
             </div>
           </article>
-          <article>
+          <article class="reveal">
             <div class="timeline-marker"><span>UB</span></div>
             <div class="timeline-card">
               <span>Materials Science</span>
@@ -235,7 +231,7 @@
               <p>University at Buffalo, SUNY</p>
             </div>
           </article>
-          <article>
+          <article class="reveal">
             <div class="timeline-marker"><span>NTU</span></div>
             <div class="timeline-card">
               <span>Current</span>
@@ -246,78 +242,78 @@
         </div>
       </section>
 
-      <section class="publication scene" id="publication" data-scene="2">
-        <div class="section-heading">
-          <p class="eyebrow">Publication</p>
-          <h2>Featured publication.</h2>
-        </div>
-        <article class="publication-card">
+      <section class="publication-section section-card surface-card" id="publication">
+        <p class="eyebrow"><span></span> Publication</p>
+        <h2 class="split-lines" data-lines="Featured|publication">Featured<br />publication</h2>
+        <article class="publication-card reveal">
           <span>Materials Today Communications | 2025</span>
           <h3>Enhanced Modeling of Electronic Structure-Mechanical Property Relationships in High-Entropy Alloys Through Data Driven Analysis</h3>
           <p>
             Md Tohidul Islam, Somya Verma, Stephen A. Giles, Debasis Sengupta, and Scott R. Broderick.
             Materials Today Communications, 47, 113112.
           </p>
-          <a class="button primary" href="https://www.sciencedirect.com/science/article/pii/S2352492825016241">Read Publication</a>
+          <a class="pill solid" href="https://www.sciencedirect.com/science/article/pii/S2352492825016241">Read Publication</a>
         </article>
       </section>
 
-      <section class="teams scene" id="teams" data-scene="1">
-        <div class="section-heading">
-          <p class="eyebrow">Past Teams</p>
-          <h2>Teams, leadership, and field experience.</h2>
-          <p>
-            Earlier roles across startup leadership, sports, energy industry training, rover design, and student
-            chapter leadership shaped how I work across technical and people-facing problems.
-          </p>
-        </div>
+      <section class="teams-section section-card light-card" id="teams">
+        <p class="eyebrow"><span></span> Past Teams</p>
+        <h2 class="split-lines" data-lines="Leadership and|field experience">Leadership and<br />field experience</h2>
         <div class="teams-board">
-          <article class="team-card">
-            <span>Business</span>
-            <h3>Business Head</h3>
-            <p>Kriyaneuro Technologies Pvt Ltd</p>
-            <time>Oct 2021 - May 2023 · 1 yr 8 mos</time>
-          </article>
-          <article class="team-card">
-            <span>Sport</span>
-            <h3>Institute Men's Tennis Team</h3>
-            <p>Madras Warhawks, IIT Madras</p>
-            <time>Jan 2020 - May 2023 · 3 yrs 5 mos</time>
-          </article>
-          <article class="team-card">
-            <span>Energy</span>
-            <h3>Industrial Trainee</h3>
-            <p>Indian Oil Corporation Limited, Mumbai</p>
-            <time>May 2022 - Jul 2022 · 3 mos</time>
-          </article>
-          <article class="team-card">
-            <span>Design</span>
-            <h3>Design Engineer (Science)</h3>
-            <p>Team Anveshak, IIT Madras</p>
-            <time>Jul 2021 - Jul 2022 · 1 yr 1 mo</time>
-          </article>
-          <article class="team-card">
-            <span>Leadership</span>
-            <h3>President</h3>
-            <p>AIChE IIT Madras Chapter</p>
-            <time>Aug 2021 - May 2022 · 10 mos</time>
-          </article>
+          <article class="team-card reveal"><span>Business</span><h3>Business Head</h3><p>Kriyaneuro Technologies Pvt Ltd</p><time>Oct 2021 - May 2023 · 1 yr 8 mos</time></article>
+          <article class="team-card reveal"><span>Sport</span><h3>Institute Men's Tennis Team</h3><p>Madras Warhawks, IIT Madras</p><time>Jan 2020 - May 2023 · 3 yrs 5 mos</time></article>
+          <article class="team-card reveal"><span>Energy</span><h3>Industrial Trainee</h3><p>Indian Oil Corporation Limited, Mumbai</p><time>May 2022 - Jul 2022 · 3 mos</time></article>
+          <article class="team-card reveal"><span>Design</span><h3>Design Engineer (Science)</h3><p>Team Anveshak, IIT Madras</p><time>Jul 2021 - Jul 2022 · 1 yr 1 mo</time></article>
+          <article class="team-card reveal"><span>Leadership</span><h3>President</h3><p>AIChE IIT Madras Chapter</p><time>Aug 2021 - May 2022 · 10 mos</time></article>
         </div>
       </section>
 
-      <section class="contact scene" id="contact" data-scene="0">
-        <p class="eyebrow">Contact</p>
-        <h2>Interested in catalyst discovery, CO<sub>2</sub> conversion, or materials informatics?</h2>
-        <p>Open to research collaborations across AI-guided catalysis, sustainable fuel pathways, and data-driven materials design.</p>
-        <a class="button primary" href="mailto:SOMYA001@e.ntu.edu.sg">SOMYA001@e.ntu.edu.sg</a>
-      </section>
+      <footer class="footer-card section-card dark-card" id="contact">
+        <div class="footer-cta">
+          <div>
+            <p class="eyebrow light"><span></span> Contact</p>
+            <h2 class="split-lines" data-lines="Let's build|better catalysts">Let's build<br />better catalysts</h2>
+          </div>
+          <a class="pill light" href="mailto:SOMYA001@e.ntu.edu.sg">Email Somya</a>
+        </div>
+        <div class="footer-grid">
+          <div>
+            <a class="site-brand footer-brand" href="#top"><span class="brand-symbol">SV</span><span>Somya Verma</span></a>
+            <p>AI-guided catalysis, sustainable fuel pathways, and data-driven materials design.</p>
+            <address>
+              <a href="mailto:SOMYA001@e.ntu.edu.sg">SOMYA001@e.ntu.edu.sg</a>
+              <a href="https://www.linkedin.com/in/somyaverma27/">LinkedIn</a>
+            </address>
+          </div>
+          <nav>
+            <h3>Research</h3>
+            <a href="#projects">Projects</a>
+            <a href="#labs">Labs</a>
+            <a href="#publication">Publication</a>
+          </nav>
+          <nav>
+            <h3>Trajectory</h3>
+            <a href="#positions">Timeline</a>
+            <a href="#teams">Past Teams</a>
+            <a href="#top">Home</a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 Somya Verma</span>
+          <span>AI x Catalysis x Materials Informatics</span>
+        </div>
+      </footer>
     </main>
 
-    <footer class="site-footer">
-      <span>Somya Verma</span>
-      <span>AI x Catalysis x Materials Informatics</span>
-      <span>2026</span>
-    </footer>
+    <div class="menu-overlay" aria-hidden="true">
+      <div class="menu-panel">
+        <button class="menu-close" type="button" aria-label="Close menu" data-close-menu>×</button>
+        <a href="#projects">Projects</a>
+        <a href="#labs">Labs</a>
+        <a href="#positions">Timeline</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
 
     <script src="script.js"></script>
   </body>

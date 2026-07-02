@@ -1,35 +1,128 @@
-const revealItems = Array.from(
-  document.querySelectorAll(".project, .lab-grid article, .timeline article, .publication-card, .team-card"),
-);
+window.scrollTo(0, 0);
 
+const html = document.documentElement;
+const loader = document.querySelector(".loader");
+const menu = document.querySelector(".menu-overlay");
+const openMenu = document.querySelector("[data-open-menu]");
+const closeMenu = document.querySelector("[data-close-menu]");
+
+let lenis = {
+  raf() {},
+  start() {},
+  stop() {},
+};
+
+import("https://cdn.jsdelivr.net/npm/lenis@1.1.18/+esm")
+  .then(({ default: Lenis }) => {
+    lenis = new Lenis({ smoothWheel: true });
+    if (document.body.classList.contains("is-locked")) lenis.stop();
+    else lenis.start();
+  })
+  .catch(() => {});
+
+function raf(time) {
+  lenis.raf(time);
+  window.requestAnimationFrame(raf);
+}
+window.requestAnimationFrame(raf);
+lenis.stop();
+document.body.classList.add("is-locked");
+
+function updateRootScale() {
+  const FONT_BASE = 16;
+  const BASE_W = 1920;
+  const COEF = 0.6666;
+  const reduction = ((BASE_W - window.innerWidth) / BASE_W) * 100 * COEF;
+  const size = FONT_BASE - (FONT_BASE * reduction) / 100;
+  if (size > FONT_BASE) html.style.fontSize = `${size}px`;
+  else html.style.removeProperty("font-size");
+}
+window.addEventListener("resize", updateRootScale);
+updateRootScale();
+
+function splitWords(element) {
+  const text = element.dataset.text || element.textContent.trim();
+  element.textContent = "";
+  text.split(" ").forEach((word, index) => {
+    const clip = document.createElement("span");
+    clip.className = "word-clip";
+    const inner = document.createElement("span");
+    inner.className = "word-inner";
+    inner.textContent = word;
+    inner.style.transitionDelay = `${index * 140}ms`;
+    clip.append(inner);
+    element.append(clip, document.createTextNode(" "));
+  });
+}
+
+function splitLines(element) {
+  const lines = (element.dataset.lines || element.textContent.trim()).split("|");
+  element.textContent = "";
+  lines.forEach((line, index) => {
+    const clip = document.createElement("span");
+    clip.className = "line-clip";
+    const inner = document.createElement("span");
+    inner.className = "line-inner";
+    inner.innerHTML = line.replace("CO₂", "CO<sub>2</sub>");
+    inner.style.transitionDelay = `${index * 120}ms`;
+    clip.append(inner);
+    element.append(clip);
+    if (index < lines.length - 1) element.append(document.createElement("br"));
+  });
+}
+
+document.querySelectorAll(".split-words").forEach(splitWords);
+document.querySelectorAll(".split-lines").forEach(splitLines);
+
+const revealItems = Array.from(document.querySelectorAll(".reveal, .project-row, .feature-card, .stats-grid div"));
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
-      entry.target.classList.toggle("is-visible", entry.isIntersecting);
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      }
     });
   },
-  {
-    threshold: 0.18,
-    rootMargin: "-8% 0px -8% 0px",
-  },
+  { threshold: 0.16, rootMargin: "-8% 0px -8% 0px" },
 );
-
 revealItems.forEach((item) => revealObserver.observe(item));
+
+function unlockPage() {
+  document.body.classList.remove("is-locked");
+  document.body.classList.add("is-ready");
+  lenis.start();
+  loader?.classList.add("is-hidden");
+  window.setTimeout(() => loader?.remove(), 900);
+}
+
+const loaderDelay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 200 : 1400;
+if (document.readyState === "complete") window.setTimeout(unlockPage, loaderDelay);
+else window.addEventListener("load", () => window.setTimeout(unlockPage, loaderDelay), { once: true });
+window.setTimeout(() => {
+  if (loader && document.body.classList.contains("is-locked")) unlockPage();
+}, 2600);
+
+function setMenu(open) {
+  menu?.classList.toggle("is-open", open);
+  menu?.setAttribute("aria-hidden", open ? "false" : "true");
+  document.body.classList.toggle("is-locked", open);
+  if (open) lenis.stop();
+  else lenis.start();
+}
+
+openMenu?.addEventListener("click", () => setMenu(true));
+closeMenu?.addEventListener("click", () => setMenu(false));
+menu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") setMenu(false);
+});
 
 let ticking = false;
 
 function updateAmbientMotion() {
   const scrollRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
   const progress = window.scrollY / scrollRange;
-  const hero = document.querySelector(".hero");
-
-  if (hero) {
-    const heroStart = hero.offsetTop;
-    const heroRange = Math.max(1, hero.offsetHeight * 0.82);
-    const heroProgress = Math.min(1, Math.max(0, (window.scrollY - heroStart) / heroRange));
-    document.documentElement.style.setProperty("--hero-progress", heroProgress.toFixed(4));
-  }
-
   document.documentElement.style.setProperty("--scroll-progress", progress.toFixed(4));
   ticking = false;
 }
@@ -198,7 +291,9 @@ async function initJourneyGlobe() {
     const addPath = (className, datum) => {
       const element = document.createElementNS("http://www.w3.org/2000/svg", "path");
       element.setAttribute("class", className);
-      element.setAttribute("d", path(datum));
+      const geometryPath = path(datum);
+      if (geometryPath) element.setAttribute("d", geometryPath);
+      else element.style.display = "none";
       svg.appendChild(element);
       pathItems.push({ element, datum });
       return element;
@@ -243,7 +338,13 @@ async function initJourneyGlobe() {
 
     const renderGlobe = () => {
       pathItems.forEach(({ element, datum }) => {
-        element.setAttribute("d", path(datum));
+        const geometryPath = path(datum);
+        if (!geometryPath) {
+          element.style.display = "none";
+          return;
+        }
+        element.style.display = "";
+        element.setAttribute("d", geometryPath);
       });
       markers.forEach(({ marker, city }) => {
         const point = projection(city.coordinates);
