@@ -217,37 +217,23 @@ sup {
   position: absolute;
   inset: -16% 0;
   z-index: -2;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(102, 139, 190, 0.34), transparent 26rem),
+    radial-gradient(circle at 18% 76%, rgba(184, 137, 58, 0.16), transparent 24rem),
+    linear-gradient(135deg, #07182c 0%, #102b4f 46%, #6e8099 100%);
   transform: translateY(calc(var(--scroll-progress) * 9%));
 }
 
-.hero-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(0.9) contrast(0.9);
-  transition: opacity 900ms ease;
-}
-
-.hero-bg.is-3d-ready img {
-  opacity: 0;
-}
-
-.hero-3d-scene,
-.hero-3d-scene canvas {
+.hero-bg::before {
+  content: "";
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.hero-3d-scene {
-  opacity: 0;
-  background: linear-gradient(135deg, #dfe9f6, #f9fbff 46%, #cfd9e9);
-  transition: opacity 900ms ease;
-}
-
-.hero-bg.is-3d-ready .hero-3d-scene {
-  opacity: 1;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 6.25rem 6.25rem;
+  mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
 }
 
 .hero-bg::after {
@@ -255,8 +241,184 @@ sup {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to bottom, rgba(15, 47, 99, 0.72), rgba(15, 47, 99, 0.38), rgba(15, 47, 99, 0.82)),
-    radial-gradient(circle at 78% 20%, rgba(87, 144, 230, 0.28), transparent 22rem);
+    linear-gradient(to bottom, rgba(8, 22, 42, 0.72), rgba(12, 38, 70, 0.42), rgba(8, 22, 42, 0.88)),
+    radial-gradient(circle at 80% 32%, rgba(255, 255, 255, 0.18), transparent 24rem);
+}
+
+.hero-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.23;
+  background-image:
+    radial-gradient(circle at 12% 30%, rgba(255, 255, 255, 0.24) 0 1px, transparent 1px),
+    radial-gradient(circle at 78% 62%, rgba(255, 255, 255, 0.18) 0 1px, transparent 1px);
+  background-size: 4.5rem 4.5rem, 6rem 6rem;
+}
+
+.hero-orbit {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  filter: blur(0.1px);
+}
+
+.hero-orbit-one {
+  width: 48rem;
+  height: 48rem;
+  right: -12rem;
+  top: 3rem;
+}
+
+.hero-orbit-two {
+  width: 34rem;
+  height: 34rem;
+  left: 24rem;
+  bottom: -15rem;
+  border-color: rgba(184, 137, 58, 0.14);
+}
+
+.hero-interface {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-panel {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.045)),
+    rgba(10, 30, 55, 0.24);
+  box-shadow: 0 1.5rem 5rem rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(18px);
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition:
+    opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-panel {
+  border-radius: 1.15rem;
+  padding: 1rem;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.hero-panel span {
+  display: block;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hero-panel svg {
+  display: block;
+  width: 100%;
+  margin-top: 0.75rem;
+  overflow: visible;
+}
+
+.spectrum-panel {
+  width: min(27vw, 27rem);
+  top: 8.5rem;
+  right: 21rem;
+}
+
+.pathway-panel {
+  width: min(31vw, 32rem);
+  right: 17rem;
+  bottom: 10.25rem;
+}
+
+.bo-panel {
+  width: min(24vw, 24rem);
+  top: 12.5rem;
+  right: 3.5rem;
+}
+
+.grid-line {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 1;
+}
+
+.trace,
+.pathway-base,
+.pathway-line,
+.contour {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.trace-gold,
+.pathway-line {
+  stroke: rgba(232, 193, 123, 0.92);
+  stroke-width: 2.2;
+}
+
+.trace-blue {
+  stroke: rgba(132, 180, 228, 0.78);
+  stroke-width: 1.8;
+}
+
+.pathway-base {
+  stroke: rgba(255, 255, 255, 0.16);
+  stroke-width: 9;
+}
+
+.pathway-line {
+  stroke-dasharray: 480;
+  stroke-dashoffset: 480;
+  animation: draw-path 2600ms 800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.pathway-nodes circle,
+.optimum,
+.sample {
+  fill: rgba(232, 193, 123, 0.96);
+  filter: drop-shadow(0 0 0.75rem rgba(232, 193, 123, 0.55));
+}
+
+.pathway-panel text {
+  fill: rgba(255, 255, 255, 0.78);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
+
+.contour {
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 1.4;
+}
+
+.sample {
+  fill: rgba(255, 255, 255, 0.78);
+}
+
+.is-ready .hero-panel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.is-ready .spectrum-panel {
+  transition-delay: 500ms;
+}
+
+.is-ready .pathway-panel {
+  transition-delay: 650ms;
+}
+
+.is-ready .bo-panel {
+  transition-delay: 800ms;
+}
+
+@keyframes draw-path {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 .hero-header {
@@ -1285,6 +1447,34 @@ sup {
     min-height: calc(100svh - 0.75rem);
   }
 
+  .hero-bg {
+    inset: -8% 0;
+  }
+
+  .hero-bg::before {
+    background-size: 4.25rem 4.25rem;
+  }
+
+  .hero-orbit-one {
+    width: 22rem;
+    height: 22rem;
+    right: -11rem;
+    top: 7rem;
+  }
+
+  .hero-orbit-two {
+    width: 18rem;
+    height: 18rem;
+    left: -8rem;
+    bottom: 5rem;
+  }
+
+  .spectrum-panel,
+  .bo-panel,
+  .pathway-panel {
+    display: none;
+  }
+
   .hero-header,
   .hero-title-wrap,
   .hero-bottom,
@@ -1312,7 +1502,7 @@ sup {
   }
 
   .hero-title {
-    font-size: clamp(3.9rem, 18vw, 4.8rem);
+    font-size: clamp(3.35rem, 15vw, 4.1rem);
     line-height: 0.9;
   }
 
